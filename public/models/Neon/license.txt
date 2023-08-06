@@ -1,0 +1,11 @@
+Model Information:
+* title:	Japanese Neon Street Sign
+* source:	https://sketchfab.com/3d-models/japanese-neon-street-sign-c91524e74c8c463ca3ddf71bc73911db
+* author:	Jackmcm (https://sketchfab.com/Jackmcm)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Japanese Neon Street Sign" (https://sketchfab.com/3d-models/japanese-neon-street-sign-c91524e74c8c463ca3ddf71bc73911db) by Jackmcm (https://sketchfab.com/Jackmcm) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
