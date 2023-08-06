@@ -11,9 +11,9 @@ export default function PageComponent() {
   return (
     <>
       <Canvas shadows camera={{ position: [0, 10, 14], fov: 42 }}>
-        <color attach="background" args={["#e3daf7"]} />
+        <color attach="background" args={["black"]} />
         {/* NEAR AND FAR */}
-        <fog attach='fog' args={['#e3daf7', 37, 40]} />
+        <fog attach='fog' args={['black', 37, 40]} />
         <Suspense>
           <Physics>
             <Experience />
