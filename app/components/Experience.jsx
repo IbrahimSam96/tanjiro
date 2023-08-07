@@ -1,11 +1,21 @@
 'use client'
-import { Cylinder, MeshReflectorMaterial, OrbitControls, Stars } from "@react-three/drei";
+import { Cylinder, MeshReflectorMaterial, OrbitControls, Stars, Text3D } from "@react-three/drei";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { Torii } from "./Torii";
 import { Ethereum } from "./Ethereum";
+import { kanas } from "@/constants";
+import { useGameStore } from "@/app/store";
+import { useEffect } from "react";
+import { KanaSpots } from "./KanaSpots";
 
 export const Experience = () => {
 
+
+    const startGame = useGameStore((state) => state.startGame);
+
+    useEffect(() => {
+        startGame();
+    }, [])
     return (
         <>
             <OrbitControls />
@@ -55,6 +65,9 @@ export const Experience = () => {
                         <meshStandardMaterial color={'white'} />
                     </Cylinder>
                 </RigidBody>
+
+                {/* Kana */}
+                <KanaSpots />
             </group>
             {/*  */}
         </>
