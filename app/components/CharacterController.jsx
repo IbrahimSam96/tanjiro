@@ -1,10 +1,11 @@
-import { CapsuleCollider, RigidBody } from "@react-three/rapier"
+import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier"
 import { Character } from "./Character"
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import * as THREE from "three";
 import { Controls } from "../pageComponent";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { gameStates, playAudio, useGameStore } from "../store";
 
 const JUMP_FORCE = 0.5;
 const MOVEMENT_SPEED = 0.1;
@@ -12,6 +13,12 @@ const MAX_VEL = 3;
 const RUN_VEL = 1.5;
 
 export const CharacterController = () => {
+
+    const { gameState } = useGameStore(
+        (state) => ({
+            gameState: state.gameState,
+        }));
+
     const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
     const leftPressed = useKeyboardControls((state) => state[Controls.left]);
     const rightPressed = useKeyboardControls((state) => state[Controls.right]);
@@ -21,6 +28,8 @@ export const CharacterController = () => {
     );
     const rigidbody = useRef();
     const isOnFloor = useRef(true);
+    const character = useRef();
+
 
     useFrame((state, delta) => {
         const impulse = { x: 0, y: 0, z: 0 };
@@ -29,7 +38,7 @@ export const CharacterController = () => {
             isOnFloor.current = false;
         }
 
-        const linvel = rigidbody.current.linvel();
+        const linvel = rigidbody.current?.linvel();
         let changeRotation = false;
         if (rightPressed && linvel.x < MAX_VEL) {
             impulse.x += MOVEMENT_SPEED;
@@ -76,12 +85,14 @@ export const CharacterController = () => {
             characterWorldPosition.z + 14
         );
 
-        // if (gameState === gameStates.GAME) {
-        //     targetCameraPosition.y = 6;
-        // }
-        // if (gameState !== gameStates.GAME) {
-        //     targetCameraPosition.y = 0;
-        // }
+        if (gameState === gameStates.GAME) {
+            targetCameraPosition.y = 9;
+            targetCameraPosition.z = 20;
+
+        }
+        if (gameState !== gameStates.GAME) {
+            targetCameraPosition.y = 0;
+        }
 
         state.camera.position.lerp(targetCameraPosition, delta * 2);
 
@@ -105,11 +116,36 @@ export const CharacterController = () => {
         state.camera.lookAt(lerpedLookAt);
     });
 
-    const character = useRef();
+    const resetPosition = () => {
+        rigidbody.current.setTranslation(vec3({ x: 0, y: 0, z: 0 }))
+        rigidbody.current.setLinvel(vec3({ x: 0, y: 0, z: 0 }))
+
+    }
+
+    // When currentStage, wrongAnswers state variables change RESETS Position called
+    useEffect(
+        () => useGameStore.subscribe((state) => state.currentStage, resetPosition),
+        []
+    );
+
+    useEffect(
+        () => useGameStore.subscribe((state) => state.wrongAnswers, resetPosition),
+        []
+    );
+
     return (
         <group>
             <RigidBody ref={rigidbody}
                 enabledRotations={[false, false, false]}
+                onIntersectionEnter={({ other }) => {
+                    if (other.rigidBodyObject.name === "void") {
+                        resetPosition();
+                     
+                        playAudio("fall", () => {
+                            playAudio("ganbatte");
+                        });
+                    }
+                }}
                 onCollisionEnter={() => {
                     isOnFloor.current = true;
                 }} colliders={false} scale={[0.5, 0.5, 0.5]}>

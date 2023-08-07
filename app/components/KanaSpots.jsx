@@ -5,10 +5,12 @@ import { CylinderCollider, RigidBody } from "@react-three/rapier";
 
 export const KanaSpots = () => {
 
-    const { level, currentKana, currentStage } = useGameStore((state) => ({
+    const { level, currentKana, kanaTouched, currentStage, mode } = useGameStore((state) => ({
         level: state.level,
         currentKana: state.currentKana,
+        kanaTouched: state.kanaTouched,
         currentStage: state.currentStage,
+        mode: state.mode
     }));
     // if null game didnt start
     if (!level) {
@@ -18,9 +20,11 @@ export const KanaSpots = () => {
 
     // render one component per kana
     return level[currentStage].map((kana, index) => (
-        <group key={kana.name} rotation-y={(index / level[currentStage].length) * Math.PI * 2}>
+        <group key={`${currentStage}-${kana.name}`} rotation-y={(index / level[currentStage].length) * Math.PI * 2}>
             <group position-x={3.5} position-z={-3.5}>
-                <RigidBody colliders={false} type="fixed">
+                <RigidBody colliders={false} type="fixed" onCollisionEnter={() => {
+                    kanaTouched(kana)
+                }}>
                     <CylinderCollider args={[0.25 / 2, 1]} />
                     <Cylinder scale={[1, 0.25, 1]}>
                         <meshStandardMaterial color={'white'} />
@@ -29,7 +33,7 @@ export const KanaSpots = () => {
 
                 <Center position-y={0.8}>
                     <Text3D rotation-y={-(index / level[currentStage].length) * Math.PI * 2} font={'./fonts/Noto Sans JP ExtraBold_Regular.json'} size={0.82}>
-                        {kana.character.hiragana}
+                        {mode == 'hiragana' ? kana.character.hiragana : kana.character.katakana}
                         <meshNormalMaterial />
                     </Text3D>
                 </Center>

@@ -1,6 +1,6 @@
 'use client'
 import { Cylinder, MeshReflectorMaterial, OrbitControls, Stars, Text3D } from "@react-three/drei";
-import { CylinderCollider, RigidBody } from "@react-three/rapier";
+import { CuboidCollider, CylinderCollider, RigidBody } from "@react-three/rapier";
 import { Torii } from "./Torii";
 import { Ethereum } from "./Ethereum";
 import { kanas } from "@/constants";
@@ -8,15 +8,10 @@ import { useGameStore } from "@/app/store";
 import { useEffect } from "react";
 import { KanaSpots } from "./KanaSpots";
 import { CharacterController } from "./CharacterController";
+import { Kicker } from "./Kicker";
 
 export const Experience = () => {
 
-
-    const startGame = useGameStore((state) => state.startGame);
-
-    useEffect(() => {
-        startGame();
-    }, [])
     return (
         <>
             {/* <OrbitControls /> */}
@@ -30,21 +25,23 @@ export const Experience = () => {
 
             {/* Background */}
             <Stars radius={100} depth={500} count={5000} factor={4} saturation={0} fade speed={2} />
-
-            <mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-                <planeGeometry args={[50, 50]} />
-                <MeshReflectorMaterial
-                    blur={[400, 400]}
-                    resolution={1024}
-                    mixBlur={1}
-                    mixStrength={15}
-                    depthScale={1}
-                    minDepthThreshold={0.85}
-                    color={'#dbecfb'}
-                    metalness={0.6}
-                    roughness={1}
-                />
-            </mesh>
+            <RigidBody colliders={false} type='fixed' name='void'>
+                <mesh position={[0, -1.5, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                    <planeGeometry args={[50, 50]} />
+                    <MeshReflectorMaterial
+                        blur={[400, 400]}
+                        resolution={1024}
+                        mixBlur={1}
+                        mixStrength={15}
+                        depthScale={1}
+                        minDepthThreshold={0.85}
+                        color={'#dbecfb'}
+                        metalness={0.6}
+                        roughness={1}
+                    />
+                </mesh>
+                <CuboidCollider position={[0, -3.5, 0]} args={[50, 0.1, 50]} sensor />
+            </RigidBody>
             <group position-z={-3}>
 
                 <Ethereum scale={[0.15, 0.15, 0.15]} position={[-1.5, 4.8, -13.8]} />
@@ -59,6 +56,7 @@ export const Experience = () => {
 
             {/* Arena */}
             <group position-y={-1}>
+                <Kicker />
                 <RigidBody colliders={false} type="fixed" position-y={-0.5} friction={2} >
                     <CylinderCollider args={[1 / 2, 5]} />
                     <Cylinder scale={[5, 1, 5]} receiveShadow >

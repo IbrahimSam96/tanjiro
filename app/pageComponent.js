@@ -6,6 +6,7 @@ import { Physics } from "@react-three/rapier";
 import { Suspense, useMemo } from "react";
 import { Experience } from '@/app/components/Experience'
 import { KeyboardControls } from "@react-three/drei";
+import { Menu } from "./components/Menu";
 
 export const Controls = {
   forward: 'forward',
@@ -32,7 +33,7 @@ export default function PageComponent() {
   return (
     <>
       <KeyboardControls map={map}>
-        <Canvas shadows camera={{ position: [0, 10, 14], fov: 42 }}>
+        <Canvas className={`row-start-2 col-start-1 col-span-8`} shadows camera={{ position: [0, 10, 14], fov: 42 }}>
           <color attach="background" args={["black"]} />
           {/* NEAR AND FAR */}
           <fog attach='fog' args={['black', 37, 40]} />
@@ -49,6 +50,7 @@ export default function PageComponent() {
             </Physics>
           </Suspense>
         </Canvas>
+        <Menu />
       </KeyboardControls>
 
     </>
