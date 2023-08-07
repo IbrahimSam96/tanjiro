@@ -5,7 +5,7 @@ import { Torii } from "./Torii";
 import { Ethereum } from "./Ethereum";
 import { kanas } from "@/constants";
 import { useGameStore } from "@/app/store";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { KanaSpots } from "./KanaSpots";
 import { CharacterController } from "./CharacterController";
 import { Kicker } from "./Kicker";
@@ -65,7 +65,9 @@ export const Experience = () => {
                 </RigidBody>
 
                 {/* Character */}
-                <CharacterController />
+                <Suspense>
+                    <CharacterController />
+                </Suspense>
 
                 {/* Kana */}
                 <KanaSpots />

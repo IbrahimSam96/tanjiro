@@ -8,7 +8,7 @@ export const Menu = () => {
         goToMenu: state.goToMenu,
     }));
     return (
-        <>opacity-0 select-none
+        <>
             <div className={`menu ${gameState !== gameStates.MENU ? `menu--hidden` : ``}`}>
                 <h1 className={`text-white font-serif`}>Kana Game</h1>
                 <button disabled={gameState !== gameStates.MENU}
@@ -25,15 +25,12 @@ export const Menu = () => {
                     Start katakana game
                 </button>
                 <div>
-                    <p>
+                    <p className={`text-white font-serif`}>
                         Made with 💙 by{" "}
                         <a href="https://youtube.com/@WawaSensei" target="_blank">
                             Dev_Jdeed
                         </a>
-                        , 3D models from{" "}
-                        <a href="https://instagram.com/belyakova.dsn" target="_blank">
-                            Camilla
-                        </a>
+                        
                     </p>
                 </div>
             </div>
@@ -41,8 +38,10 @@ export const Menu = () => {
                 className={`scores ${gameState !== gameStates.GAME_OVER ? "scores--hidden" : ""
                     }`}
             >
-                <h1>Congratulations you are becoming a true master</h1>
+                <h1 className={`text-white font-serif`}>Congratulations you are becoming a true master</h1>
                 <button
+                    className={`px-4 py-8 border-none transition-colors text-2xl
+                bg-[rgba(255,255,255,0.6)] hover:bg-white hover:cursor-pointer `}
                     onClick={goToMenu}
                     disabled={gameState !== gameStates.GAME_OVER}
                 >
