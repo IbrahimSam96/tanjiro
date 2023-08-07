@@ -1,0 +1,11 @@
+Model Information:
+* title:	Hisoka HxH
+* source:	https://sketchfab.com/3d-models/hisoka-hxh-f85b3502129c41b2a0dc24b16a49a8ee
+* author:	CriticalMammal (https://sketchfab.com/CriticalMammal)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Hisoka HxH" (https://sketchfab.com/3d-models/hisoka-hxh-f85b3502129c41b2a0dc24b16a49a8ee) by CriticalMammal (https://sketchfab.com/CriticalMammal) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

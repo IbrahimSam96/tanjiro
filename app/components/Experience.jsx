@@ -7,6 +7,7 @@ import { kanas } from "@/constants";
 import { useGameStore } from "@/app/store";
 import { useEffect } from "react";
 import { KanaSpots } from "./KanaSpots";
+import { CharacterController } from "./CharacterController";
 
 export const Experience = () => {
 
@@ -18,7 +19,7 @@ export const Experience = () => {
     }, [])
     return (
         <>
-            <OrbitControls />
+            {/* <OrbitControls /> */}
             {/* Lights */}
             <ambientLight intensity={1} />
             <directionalLight
@@ -45,7 +46,6 @@ export const Experience = () => {
                 />
             </mesh>
             <group position-z={-3}>
-                <spotLight color={"hotpink"} position={[2, 2, 7]} distance={10} />
 
                 <Ethereum scale={[0.15, 0.15, 0.15]} position={[-1.5, 4.8, -13.8]} />
                 <Ethereum scale={[0.15, 0.15, 0.15]} position={[1.5, 4.8, -13.8]} />
@@ -59,12 +59,15 @@ export const Experience = () => {
 
             {/* Arena */}
             <group position-y={-1}>
-                <RigidBody colliders={false} type="fixed" position-y={-0.5} >
+                <RigidBody colliders={false} type="fixed" position-y={-0.5} friction={2} >
                     <CylinderCollider args={[1 / 2, 5]} />
                     <Cylinder scale={[5, 1, 5]} receiveShadow >
                         <meshStandardMaterial color={'white'} />
                     </Cylinder>
                 </RigidBody>
+
+                {/* Character */}
+                <CharacterController />
 
                 {/* Kana */}
                 <KanaSpots />
