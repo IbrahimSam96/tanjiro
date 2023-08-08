@@ -10,24 +10,28 @@ export const Menu = () => {
     return (
         <>
             <div className={`menu ${gameState !== gameStates.MENU ? `menu--hidden` : ``}`}>
-                <h1 className={`text-white font-serif`}>Kana Game</h1>
+                <div>
+                <h1 className={`text-white font-serif text-center`}>Kana Game</h1>
+                <p className={`text-white `}>What do you want to practice today?</p>
+
+                </div>
                 <button disabled={gameState !== gameStates.MENU}
                     onClick={() => startGame({ mode: 'hiragana' })}
                     className={`px-4 py-8 border-none transition-colors text-2xl
-                  bg-[rgba(255,255,255,0.6)] hover:bg-white hover:cursor-pointer `}>
+                    bg-[rgb(215,186,223,60%)] hover:bg-white hover:cursor-pointer `}>
                     Start hiragana game
                 </button>
                 <button disabled={gameState !== gameStates.MENU}
                     onClick={() => startGame({ mode: 'kitakana' })}
                     className={`px-4 py-8 border-none transition-colors text-2xl
-                 bg-[rgba(255,255,255,0.6)] hover:bg-white hover:cursor-pointer `}
+                 bg-[rgb(215,186,223,60%)] hover:bg-white hover:cursor-pointer `}
                 >
                     Start katakana game
                 </button>
                 <div>
                     <p className={`text-white font-serif`}>
                         Made with 💙 by{" "}
-                        <a href="https://youtube.com/@WawaSensei" target="_blank">
+                        <a href="https://twitter.com/dev_jdeed" target="_blank">
                             Dev_Jdeed
                         </a>
                         

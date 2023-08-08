@@ -53,6 +53,8 @@ export const useGameStore = create(subscribeWithSelector((set, get) => ({
     level: null,
     currentStage: 0,
     currentKana: null,
+    lastWrongKana: null,
+
     mode: 'hiragana',
     gameState: gameStates.MENU,
     // extra
@@ -97,7 +99,7 @@ export const useGameStore = create(subscribeWithSelector((set, get) => ({
             // extra
             const score = state.score + 1;
 
-            return { currentStage, currentKana, score }
+            return { currentStage, currentKana, score, lastWrongKana: null }
 
         })
     },
@@ -117,10 +119,17 @@ export const useGameStore = create(subscribeWithSelector((set, get) => ({
             });
             set((state) => ({
                 wrongAnswers: state.wrongAnswers + 1,
+                lastWrongKana: kana
             }));
 
         }
-    }
+    },
+    // CHARACTER CONTROLLER
+    characterState: "Idle",
+    setCharacterState: (characterState) =>
+        set({
+            characterState,
+        })
 
 })
 

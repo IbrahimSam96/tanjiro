@@ -1,5 +1,5 @@
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier"
-import { Character } from "./Character"
+import Character  from "./Character"
 import { useFrame } from "@react-three/fiber";
 import { useKeyboardControls } from "@react-three/drei";
 import * as THREE from "three";
@@ -14,10 +14,13 @@ const RUN_VEL = 1.5;
 
 export const CharacterController = () => {
 
-    const { gameState } = useGameStore(
+    const { characterState, setCharacterState, gameState } = useGameStore(
         (state) => ({
-            gameState: state.gameState,
-        }));
+          character: state.characterState,
+          setCharacterState: state.setCharacterState,
+          gameState: state.gameState,
+        })
+      );
 
     const jumpPressed = useKeyboardControls((state) => state[Controls.jump]);
     const leftPressed = useKeyboardControls((state) => state[Controls.left]);
@@ -57,17 +60,17 @@ export const CharacterController = () => {
             changeRotation = true;
         }
 
-        rigidbody.current.applyImpulse(impulse, true);
+        rigidbody.current?.applyImpulse(impulse, true);
 
-        // if (Math.abs(linvel.x) > RUN_VEL || Math.abs(linvel.z) > RUN_VEL) {
-        //   if (characterState !== "Run") {
-        //     setCharacterState("Run");
-        //   }
-        // } else {
-        //   if (characterState !== "Idle") {
-        //     setCharacterState("Idle");
-        //   }
-        // }
+        if (Math.abs(linvel?.x) > RUN_VEL || Math.abs(linvel?.z) > RUN_VEL) {
+          if (characterState !== "Run") {
+            setCharacterState("Run");
+          }
+        } else {
+          if (characterState !== "Idle") {
+            setCharacterState("Idle");
+          }
+        }
 
         if (changeRotation) {
             const angle = Math.atan2(linvel.x, linvel.z);
@@ -86,8 +89,8 @@ export const CharacterController = () => {
         );
 
         if (gameState === gameStates.GAME) {
-            targetCameraPosition.y = 9;
-            targetCameraPosition.z = 20;
+            targetCameraPosition.y = 6;
+            // targetCameraPosition.z = 20;
 
         }
         if (gameState !== gameStates.GAME) {
@@ -151,7 +154,7 @@ export const CharacterController = () => {
                 }} colliders={false} scale={[0.5, 0.5, 0.5]}>
                 <CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
                 <group ref={character}>
-                    <Character scale={[0.02, 0.02, 0.02]} />
+                    <Character />
                 </group>
             </RigidBody>
         </group>
