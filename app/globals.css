@@ -49,7 +49,7 @@ a {
   pointer-events: none;
 }
 
-button {
+.menu, .scores button {
   background: rgb(215 186 223 / 60%);
   padding: 24px 42px;
   border: none;

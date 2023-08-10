@@ -9,6 +9,8 @@ import { KeyboardControls, Loader, useFont, useProgress } from "@react-three/dre
 import { Menu } from "./components/Menu";
 import { Leva } from "leva";
 
+
+
 export const Controls = {
   forward: 'forward',
   back: 'back',
@@ -19,6 +21,7 @@ export const Controls = {
 }
 
 export default function PageComponent() {
+
   useFont.preload("./fonts/Noto Sans JP ExtraBold_Regular.json");
 
   const map = useMemo(
@@ -32,14 +35,14 @@ export default function PageComponent() {
     []
   );
 
-  const { progress } = useProgress()
+  const { progress } = useProgress();
 
   return (
     <>
       <KeyboardControls map={map}>
         <Leva hidden />
 
-        <Canvas className={`row-start-2 col-start-1 col-span-8`} shadows camera={{ position: [0, 20, 14], fov: 42 }}>
+        <Canvas className={`row-start-2 col-start-1 col-span-8`} shadows camera={{ position: [0, 25, 14], fov: 42 }}>
           <color attach="background" args={["black"]} />
           {/* NEAR AND FAR */}
           <fog attach='fog' args={['black', 37, 40]} />

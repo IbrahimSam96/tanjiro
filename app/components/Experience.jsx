@@ -21,7 +21,7 @@ export const Experience = () => {
     return (
         <>
             {/* Lights */}
-            <Environment preset={'night'} />
+            {/* <Environment preset={'night'} /> */}
             <directionalLight
                 position={[5, 5, 5]}
                 intensity={0.3}
