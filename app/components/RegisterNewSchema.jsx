@@ -4,7 +4,7 @@ import { SchemaEncoder } from "@ethereum-attestation-service/eas-sdk/dist";
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import { useAccount, useNetwork, usePublicClient, useWalletClient } from "wagmi";
-import { useEthersSigner } from "../ethers";
+import { useEthersSigner, useProvider } from "../ethers";
 
 export const RegisterSchema = () => {
     // Wagmi and ethers provider and signer setup
@@ -17,6 +17,8 @@ export const RegisterSchema = () => {
 
     // WAGMI walletClient TO ethers signer 
     const signer = useEthersSigner();
+
+    const provider = useProvider();
 
     const { address, isDisconnected, isConnected } = useAccount();
 
@@ -81,7 +83,7 @@ export const RegisterSchema = () => {
     const getSchema = async () => {
 
         const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
-        schemaRegistry.connect(publicClient);
+        schemaRegistry.connect(provider);
 
         const schemaRecord = await schemaRegistry.getSchema({ uid: schemaUID });
 
@@ -91,11 +93,17 @@ export const RegisterSchema = () => {
 
     const getAttestation = async () => {
 
+        if (AttestationUID == '') {
+            console.log('No attestation UID provided')
+            return;
+        }
+
         const eas = new EAS(EASContractAddress);
 
         eas.connect(signer);
 
-        const attestation = await eas.getAttestation('0x7f8ddbf4246d5fe732d4ac373bc0790ccba6aa074fab21622154ffb4cba39c77');
+        // sepolia example 0x7f8ddbf4246d5fe732d4ac373bc0790ccba6aa074fab21622154ffb4cba39c77
+        const attestation = await eas.getAttestation(AttestationUID);
 
         console.log(attestation);
 
@@ -171,7 +179,7 @@ export const RegisterSchema = () => {
 
     return (
         <>
-            <button onClick={() => { getAttestation() }} className={`p-4 border-none rounded transition-colors text-xl
+            <button onClick={() => { getSchema() }} className={`p-4 border-none rounded transition-colors text-xl
                 bg-[rgba(255,255,255,60%)] hover:bg-[#FFFFFF] hover:cursor-pointer `}>
                 Resgister New Schema
             </button>
