@@ -5,8 +5,19 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 import { useAccount, useNetwork, usePublicClient, useWalletClient } from "wagmi";
 import { useEthersSigner, useProvider } from "../ethers";
+import { gameStates, useGameStore } from "../store";
 
 export const RegisterSchema = () => {
+
+    const { wrongAnswers, mode, timeStamp, endTimeStamp, gameState } = useGameStore(
+        (state) => ({
+            wrongAnswers: state.wrongAnswers,
+            mode: state.mode,
+            timeStamp: state.timeStamp,
+            endTimeStamp: state.endTimeStamp,
+            gameState: state.gameState
+        })
+    );
     // Wagmi and ethers provider and signer setup
     const connection = useNetwork();
     // Wagmi signer/walletCLIENT provider/publicClient 
@@ -47,17 +58,17 @@ export const RegisterSchema = () => {
     // Optimism Goerli 0x9b64e207e65aed3b0143bebc1b715ca2a012fce065ec7cfe0fc2dda061e1c464
     // Base Goerli // NOT available yet
 
-    const [schemaUID, setActiveSchemaUID] = useState('')
+    const [schemaUID, setActiveSchemaUID] = useState('');
 
-    const [AttestationUID, setAttestationUID] = useState('')
+    const [AttestationUID, setAttestationUID] = useState('');
 
     // Changes All EAS Schema Registry, and Schema Contract Addresses depending on active chain 
     useEffect(() => {
 
         if (connection.chain) {
             if (connection.chain.name == "Optimism Goerli") {
-                setSchemaRegistryContractAddress(SchemaRegistryAddresses.optimismGoerli)
-                setEASContractAddress(EASAddresses.optimismGoerli)
+                setSchemaRegistryContractAddress(SchemaRegistryAddresses.optimismGoerli);
+                setEASContractAddress(EASAddresses.optimismGoerli);
                 setActiveSchemaUID('0x9b64e207e65aed3b0143bebc1b715ca2a012fce065ec7cfe0fc2dda061e1c464')
             }
 
@@ -100,15 +111,15 @@ export const RegisterSchema = () => {
 
         const eas = new EAS(EASContractAddress);
 
-        eas.connect(signer);
+        eas.connect(provider);
 
         // sepolia example 0x7f8ddbf4246d5fe732d4ac373bc0790ccba6aa074fab21622154ffb4cba39c77
+        // Optimism goerli 0x6fe3dcba49e0a75864caff989589a8d1831cf3f332f2eba694900019eb5c4c48
         const attestation = await eas.getAttestation(AttestationUID);
 
         console.log(attestation);
 
     }
-
 
     const RegisterSchema = async () => {
 
@@ -144,45 +155,56 @@ export const RegisterSchema = () => {
 
     const AttestOnChain = async () => {
 
-        if (schemaUID == '' || EASContractAddress == '' || isDisconnected) {
-            return;
+        // Attest User to mint Zora's ERC721  
+        if (gameStates.GAME_OVER == gameState) {
+
+            if (schemaUID == '' || EASContractAddress == '' || isDisconnected) {
+                console.log('Empty Contract / Registry or UID value')
+                return;
+            }
+
+            const eas = new EAS(EASContractAddress);
+
+            eas.connect(signer);
+
+            // // Initialize SchemaEncoder with the schema string
+            const schemaEncoder = new SchemaEncoder("string gameMode, uint64 completionDate, bytes32 gameVersion");
+            const encodedData = schemaEncoder.encodeData([
+                { name: "gameMode", value: mode, type: "string" },
+                { name: "completionDate", value: timeStamp - endTimeStamp, type: "uint64" },
+                { name: "gameVersion", value: '1', type: "bytes32" },
+            ]);
+
+            const tx = await eas.attest({
+                schema: schemaUID,
+                data: {
+                    recipient: address,
+                    expirationTime: 0,
+                    revocable: true,
+                    data: encodedData,
+                },
+            });
+
+            const newAttestationUID = await tx.wait();
+            setAttestationUID(newAttestationUID);
+
+            // console.log("New attestation UID:", newAttestationUID);
+
         }
-
-        const eas = new EAS(EASContractAddress);
-
-        eas.connect(signer);
-
-        // Initialize SchemaEncoder with the schema string
-        const schemaEncoder = new SchemaEncoder("string gameMode, uint64 completionDate, bytes32 gameVersion");
-        const encodedData = schemaEncoder.encodeData([
-            { name: "gameMode", value: 'hiragana', type: "string" },
-            { name: "completionDate", value: '55', type: "uint64" },
-            { name: "gameVersion", value: '1', type: "bytes32" },
-        ]);
-
-        const tx = await eas.attest({
-            schema: schemaUID,
-            data: {
-                recipient: address,
-                expirationTime: 0,
-                revocable: true,
-                data: encodedData,
-            },
-        });
-
-        const newAttestationUID = await tx.wait();
-        setAttestationUID(newAttestationUID)
-        console.log("New attestation UID:", newAttestationUID);
-
     }
+
+
+
+    // When gameState changes Calls AttestOnChain
+    useEffect(
+        () => useGameStore.subscribe((state) => state.gameState, AttestOnChain),
+        []
+    );
 
 
     return (
         <>
-            <button onClick={() => { getSchema() }} className={`p-4 border-none rounded transition-colors text-xl
-                bg-[rgba(255,255,255,60%)] hover:bg-[#FFFFFF] hover:cursor-pointer `}>
-                Resgister New Schema
-            </button>
+
         </>
     )
 } 

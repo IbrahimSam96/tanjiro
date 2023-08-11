@@ -25,7 +25,7 @@ const { chains, publicClient } = configureChains(
         zoraTestnet,
         modeTestnet],
     [
-        alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_ID }),
+        alchemyProvider({ apiKey: 'YbWJAwcfrjlIofacnElwR2jDxrQoogqI' }),
         publicProvider()
     ]
 );

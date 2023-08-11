@@ -48,10 +48,9 @@ export const generateGameLevel = ({ nbStages }) => {
     return level;
 }
 
-
 // Global store function -  Meant to return state object of our game
 export const useGameStore = create(
-    subscribeWithSelector((set, get) => ({
+    subscribeWithSelector( (set, get) => ({
         level: null,
         currentStage: 0,
         currentKana: null,
@@ -82,6 +81,7 @@ export const useGameStore = create(
             // increases stage number and selects the  correct kana for the new stage
             set((state) => {
                 if (state.currentStage + 1 === state.level.length) {
+                    // Run Code to sign Attestation if wrongAnswers == 0 prepare completionDate: endTimeStamp - timeStamp ,gameMode: mode,gameVersion:gameVersion1
                     playAudio("congratulations");
                     return {
                         currentStage: 0,
@@ -108,7 +108,6 @@ export const useGameStore = create(
                 return { currentStage, currentKana, streak, topStreak, lastWrongKana: null, }
             })
         },
-        
         goToMenu: () => {
             set({
                 gameState: gameStates.MENU,

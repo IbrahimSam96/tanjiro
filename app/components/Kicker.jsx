@@ -33,7 +33,7 @@ export const Kicker = () => {
     <RigidBody type="kinematicPosition" position={[0, 0.1, 0]} ref={kicker}>
       <group position={[3, 0, 0]}>
         <Box args={[1.5, 0.2, 0.2]}>
-          <meshStandardMaterial color={"mediumpurple"} />
+          <meshStandardMaterial color={'pink'} />
         </Box>
       </group>
     </RigidBody>

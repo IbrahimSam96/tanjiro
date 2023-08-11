@@ -2,9 +2,10 @@ import { useGameStore } from "@/app/store";
 import { Center, Cylinder, Sphere, Text3D } from "@react-three/drei";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
 import { useControls } from "leva";
+import React from "react";
 
 
-export const KanaSpots = () => {
+const KanaSpots = () => {
 
     const { level, currentKana, kanaTouched, currentStage, mode } = useGameStore((state) => ({
         level: state.level,
@@ -20,7 +21,7 @@ export const KanaSpots = () => {
         transmissionSampler: false,
         backside: false,
         samples: { value: 10, min: 1, max: 32, step: 1 },
-        resolution: { value: 1024, min: 256, max: 2048, step: 256 },
+        resolution: { value: 256, min: 256, max: 2048, step: 256 },
         transmission: { value: 1, min: 0, max: 1 },
         roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
         thickness: { value: 0, min: 0, max: 10, step: 0.01 },
@@ -39,7 +40,6 @@ export const KanaSpots = () => {
 
     // if null game didnt start
     if (!level) {
-        console.log('no level', currentStage)
         return null;
     }
 
@@ -61,12 +61,13 @@ export const KanaSpots = () => {
                 <Center position-y={0.8}>
                     <Text3D rotation-y={-(index / level[currentStage].length) * Math.PI * 2} font={'./fonts/Noto Sans JP ExtraBold_Regular.json'} size={0.82}>
                         {mode == 'hiragana' ? kana.character.hiragana : kana.character.katakana}
-                        <meshStandardMaterial color={'pink'}/>
+                        <meshStandardMaterial color={'pink'} />
                     </Text3D>
                 </Center>
             </group>
         </group>
     ))
 
-
 }
+
+export default React.memo(KanaSpots)

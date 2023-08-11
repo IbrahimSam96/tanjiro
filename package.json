@@ -14,6 +14,8 @@
     "@react-three/drei": "^9.80.1",
     "@react-three/fiber": "^8.13.6",
     "@react-three/rapier": "^1.1.1",
+    "@zoralabs/zora-1155-contracts": "^1.3.3",
+    "@zoralabs/zora-721-contracts": "^1.14.1",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
