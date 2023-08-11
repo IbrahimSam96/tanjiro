@@ -15,7 +15,7 @@ export const MintERC721 = () => {
 
     const [HariaganaERC21Address, setHariganaERC721Address] = useState('');
     const [KatakanaERC21Address, setKatakanaERC721Address] = useState('');
-    const [SuperHackERC21Address, setSuperHackERC21Address] = useState('')
+    const [SuperHackERC21Address, setSuperHackERC21Address] = useState('');
     // Zora'a deployed ERC721 contracts to mint NFT against
     // Optimisim Goerli Harigana Master 0x82d509f7c3e2cc64bb6bb4979a4492397b3d4707
     // Optimisim Goerli Katakana Master 0x6c8ad6f32515eaa1275671f654a1cef7e2fc1113

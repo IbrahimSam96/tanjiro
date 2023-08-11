@@ -75,7 +75,7 @@ const Menu = () => {
                     className={`MenubuttonMint flex`}
                 >
                     <Image className={`my-auto mr-2`} alt={'Zora Mint'} src={'/zoraOrb.svg'} width={30} height={30} />
-                    <p className={`my-auto mr-2`}> Mint Master's NFT</p>
+                    <p className={`my-auto mr-2`}> {`Mint Master's NFT`}</p>
                 </button>
 
             </div>
@@ -108,6 +108,8 @@ const Menu = () => {
                 >
                     Play again
                 </button>
+
+                
             </div>
         </>
     )
