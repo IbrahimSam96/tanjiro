@@ -83,3 +83,22 @@ a {
   cursor: pointer;
   color: #000000b3;
 }
+
+.MenuSubmit{
+  background: rgb(215 186 223 / 60%);
+  padding: 14px 22px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.4s;
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+  display: grid;
+  justify-self: center;
+}
+
+.MenuSubmit:hover {
+  background: #fffffff5;
+  cursor: pointer;
+  color: #000000b3;
+}

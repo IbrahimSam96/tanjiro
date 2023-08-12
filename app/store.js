@@ -5,7 +5,8 @@ import { subscribeWithSelector } from 'zustand/middleware';
 export const gameStates = {
     MENU: 'MENU',
     GAME: 'GAME',
-    GAME_OVER: 'GAME_OVER'
+    GAME_OVER: 'GAME_OVER',
+    SHOW: 'SHOW'
 }
 
 export const playAudio = (path, callback) => {
@@ -50,19 +51,20 @@ export const generateGameLevel = ({ nbStages }) => {
 
 // Global store function -  Meant to return state object of our game
 export const useGameStore = create(
-    subscribeWithSelector( (set, get) => ({
+    subscribeWithSelector((set, get) => ({
         level: null,
         currentStage: 0,
         currentKana: null,
         lastWrongKana: null,
         mode: 'hiragana',
-        gameState: gameStates.MENU,
+        gameState: gameStates.GAME_OVER,
         // extra
         wrongAnswers: 0,
         streak: 0,
         topStreak: 0,
         timeStamp: null,
         endTimeStamp: null,
+        latestAttestation: null,
         startGame: ({ mode }) => {
             // generates game level and gets correct kana
             const level = generateGameLevel({ nbStages: 5 });
@@ -113,6 +115,11 @@ export const useGameStore = create(
                 gameState: gameStates.MENU,
             });
         },
+        goToShow: () => {
+            set({
+                gameState: gameStates.SHOW,
+            });
+        },
         kanaTouched: (kana) => {
             const currentKana = get().currentKana;
             if (currentKana.name === kana.name) {
@@ -129,6 +136,11 @@ export const useGameStore = create(
                     streak: 0,
                 }));
             }
+        },
+        setAttestationUID: (uid) => {
+            set({
+                latestAttestation: uid,
+            });
         },
         // CHARACTER CONTROLLER
         characterState: "Idle",

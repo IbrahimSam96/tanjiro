@@ -155,7 +155,7 @@ export const RegisterSchema = () => {
 
     const AttestOnChain = async () => {
 
-        // Attest User to mint Zora's ERC721  
+        // Attest User score on EAS Schema  
         if (gameStates.GAME_OVER == gameState) {
 
             if (schemaUID == '' || EASContractAddress == '' || isDisconnected) {
@@ -197,7 +197,7 @@ export const RegisterSchema = () => {
 
     // When gameState changes Calls AttestOnChain
     useEffect(
-        () => useGameStore.subscribe((state) => state.gameState, AttestOnChain),
+        () => useGameStore.subscribe((state) => state.latestAttestation, AttestOnChain),
         []
     );
 
