@@ -101,15 +101,13 @@ const Menu = () => {
                 </span>
 
                 <button
-                    className={`px-4 py-8 border-none transition-colors text-2xl
-                bg-[rgba(255,255,255,0.6)] hover:bg-white hover:cursor-pointer `}
+                    className={`Menubutton`}
                     onClick={goToMenu}
                     disabled={gameState !== gameStates.GAME_OVER}
                 >
                     Play again
                 </button>
 
-                
             </div>
         </>
     )
