@@ -167,7 +167,7 @@ const Menu = () => {
         <>
             <div className={`menu ${gameState !== gameStates.MENU ? `menu--hidden` : ``}`}>
                 <span className={`self-start ml-auto mx-2`}>
-                    <ConnectButton />
+                    {/* <ConnectButton /> */}
                 </span>
 
                 <div>
