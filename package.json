@@ -21,6 +21,7 @@
     "eslint-config-next": "13.4.12",
     "ethers": "5.7.2",
     "leva": "^0.9.35",
+    "maath": "^0.7.0",
     "moment": "^2.29.4",
     "next": "13.4.12",
     "postcss": "8.4.27",

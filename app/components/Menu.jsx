@@ -1,5 +1,5 @@
 'use client'
-// @refresh reset
+
 import moment from "moment/moment";
 import { gameStates, useGameStore } from "../store"
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -136,7 +136,7 @@ const Menu = () => {
             const schemaEncoder = new SchemaEncoder("string gameMode, uint64 completionDate, bytes32 gameVersion");
             const encodedData = schemaEncoder.encodeData([
                 { name: "gameMode", value: mode, type: "string" },
-                { name: "completionDate", value: timeStamp - endTimeStamp, type: "uint64" },
+                { name: "completionDate", value: elapsed, type: "uint64" },
                 { name: "gameVersion", value: '1', type: "bytes32" },
             ]);
 

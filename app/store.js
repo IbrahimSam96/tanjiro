@@ -57,7 +57,7 @@ export const useGameStore = create(
         currentKana: null,
         lastWrongKana: null,
         mode: 'hiragana',
-        gameState: gameStates.MENU,
+        gameState: gameStates.GAME_OVER,
         // extra
         wrongAnswers: 0,
         streak: 0,

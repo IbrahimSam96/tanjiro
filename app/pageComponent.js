@@ -2,12 +2,12 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
-import { Suspense, useMemo } from "react";
-import { Experience } from '@/app/components/Experience'
+import { Suspense, useEffect, useMemo } from "react";
+import { Experience, Experience2 } from '@/app/components/Experience'
 import { Cloud, KeyboardControls, Loader, useFont, useProgress } from "@react-three/drei";
 import Menu from "./components/Menu";
 import { Leva } from "leva";
-import { RegisterSchema } from "./components/RegisterNewSchema";
+import { gameStates, useGameStore } from "./store";
 
 
 export const Controls = {
@@ -36,29 +36,41 @@ export default function PageComponent() {
 
   const { progress } = useProgress();
 
+  const { gameState, goToMenu } = useGameStore((state) => ({
+    gameState: state.gameState,
+    goToMenu: state.goToMenu
+  }));
+
+
+  // When gameState changes Calls changeScene
+  // useEffect(
+  //   () => useGameStore.subscribe((state) => state.gameState),
+  //   []
+  // );
 
   return (
     <>
       <KeyboardControls map={map}>
         <Leva hidden />
-
-        <Canvas className={`row-start-2 col-start-1 col-span-8`} shadows camera={{ position: [0, 20, 19], fov: 42 }}>
+        <Canvas className={`row-start-2 col-start-1 col-span-8`} shadows camera={gameState == gameStates.SHOW ? { position: [0, 0, 10], fov: 30 } : { position: [0, 20, 19], fov: 42 }}>
           <color attach="background" args={["black"]} />
-
-          {/* NEAR AND FAR */}
-          <Suspense>
-            <Physics>
-              <Experience />
-            </Physics>
-          </Suspense>
+          {gameState == gameStates.SHOW ?
+            <Suspense>
+              <Experience2 />
+            </Suspense>
+            :
+            <Suspense>
+              <Physics>
+                <Experience />
+              </Physics>
+            </Suspense>
+          }
         </Canvas>
         <Loader />
-
         {/* Menu + Attestation + Mint */}
         {progress == 100 &&
           <>
             <Menu />
-            {/* <RegisterSchema /> */}
           </>
         }
       </KeyboardControls>
