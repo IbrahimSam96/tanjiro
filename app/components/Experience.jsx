@@ -302,15 +302,14 @@ export const Experience2 = () => {
     } = useWaitForTransaction({ hash: data?.hash });
 
     console.log(receipt)
-    useEffect(() => {
-    // Play SoundTrack After Mint
-        if (isSuccess) {
-            const audio = new Audio(`./sounds/ThemeSong.mp3`);
-     
-            audio.play();
 
-        }
-    }, [receipt])
+    useEffect(() => {
+        // Play SoundTrack on enter
+        const audio = new Audio(`./sounds/ThemeSong.mp3`);
+
+        audio.play();
+
+    }, [])
 
 
     return (
