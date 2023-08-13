@@ -16,6 +16,14 @@ Named after Demon Slayer Main Character Tanjiro Kamado, A interactive experience
 
  - [Huge shout out to the original creator of the game Wawa Sensei](https://www.youtube.com/@WawaSensei). Used his youtube to draw a combination of scenes.
 
+**ScreenShots:**
+
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/GameMenu.PNG" width="550">
+<img src= "https://github.com/IbrahimSam96/tanjiro/blob/master/public/Score.PNG" width="550">
+
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/NFTMenu.PNG" width="550">
+
+
 
 
 - Font : Noto Sans Japanese 
