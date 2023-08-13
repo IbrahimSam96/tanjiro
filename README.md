@@ -23,6 +23,11 @@ Named after Demon Slayer Main Character Tanjiro Kamado, A interactive experience
 
 <img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/NFTMenu.PNG" width="550">
 
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/Tanjiro" width="550">
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/Nezuko.PNG" width="550">
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/Gyutaro.PNG" width="550">
+<img src="https://github.com/IbrahimSam96/tanjiro/blob/master/public/Tanjiro.PNG" width="550">
+
 
 
 
