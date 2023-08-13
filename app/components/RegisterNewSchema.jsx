@@ -31,7 +31,7 @@ export const RegisterSchema = () => {
 
     const provider = useProvider();
 
-    const { address, isDisconnected, isConnected } = useAccount();
+    const { address, isDisconnected } = useAccount();
 
     // EAS Contract Address
     const [EASContractAddress, setEASContractAddress] = useState('');
@@ -39,8 +39,8 @@ export const RegisterSchema = () => {
     const EASAddresses = {
         optimismGoerli: '0x4200000000000000000000000000000000000021',
         sepolia: '0xC2679fBD37d54388Ce493F1DB75320D236e1815e',
-        baseGoerli: '0xAcfE09Fd03f7812F022FBf636700AdEA18Fd2A7A'
-        // zoraTestnet: '', NOT SUPPORTED ON EAS
+        baseGoerli: '0xAcfE09Fd03f7812F022FBf636700AdEA18Fd2A7A',
+        zoraTestnet: '0x83Bf9F56E703A87fC05eabB6933E1A8D5ceC87f3',
         // modeTestnet: '' NOT SUPPORTED ON EAS
     }
     // Schema Resgistry Contract Address
@@ -49,14 +49,15 @@ export const RegisterSchema = () => {
     const SchemaRegistryAddresses = {
         optimismGoerli: '0x4200000000000000000000000000000000000020',
         sepolia: '0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0',
-        baseGoerli: '0x720c2bA66D19A725143FBf5fDC5b4ADA2742682E'
-        // zoraTestnet: '', NOT SUPPORTED ON EAS
-        // modeTestnet: '' NOT SUPPORTED ON EAS
+        baseGoerli: '0x720c2bA66D19A725143FBf5fDC5b4ADA2742682E',
+        zoraTestnet: '0xBb7ca7a34cE4D4808385c117101657026d861292',
+        // modeTestnet: '' NOT SUPPORTED ON EAS YET
     }
     // Deployed Schemas UID's
     // Sepolia 0x9b64e207e65aed3b0143bebc1b715ca2a012fce065ec7cfe0fc2dda061e1c464
     // Optimism Goerli 0x9b64e207e65aed3b0143bebc1b715ca2a012fce065ec7cfe0fc2dda061e1c464
     // Base Goerli // NOT available yet
+    // Zora Tesnet 0x220f3f46bd44923d50cf9b2dbaf766b70e36c61308da6e0143b7bae31edafa16
 
     const [schemaUID, setActiveSchemaUID] = useState('');
 
@@ -84,6 +85,13 @@ export const RegisterSchema = () => {
                 // NOT available yet
                 setActiveSchemaUID('')
             }
+            if (connection.chain.name == "Zora Goerli Testnet") {
+                setSchemaRegistryContractAddress(SchemaRegistryAddresses.zoraTestnet)
+                setEASContractAddress(EASAddresses.zoraTestnet)
+                // NOT available yet
+                setActiveSchemaUID('0x220f3f46bd44923d50cf9b2dbaf766b70e36c61308da6e0143b7bae31edafa16')
+
+            }
 
         }
 
@@ -96,7 +104,7 @@ export const RegisterSchema = () => {
         const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
         schemaRegistry.connect(provider);
 
-        const schemaRecord = await schemaRegistry.getSchema({ uid: schemaUID });
+        const schemaRecord = await schemaRegistry.getSchema({ uid: '' });
 
         console.log(schemaRecord);
 
@@ -127,18 +135,17 @@ export const RegisterSchema = () => {
             return;
         }
         // Initialize the sdk with the address of the EAS Schema contract address
-        // 0xC2679fBD37d54388Ce493F1DB75320D236e1815e SEPOLIA
         const eas = new EAS(EASContractAddress);
         // Connects an ethers style provider/signingProvider to perform read/write functions.
         // MUST be a signer to do write operations!
 
-        eas.connect(publicClient);
+        eas.connect(signer);
         // 0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0 SEPOLIA
         const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
 
         schemaRegistry.connect(signer);
 
-        const schema = "uint256 eventId, uint8 voteIndex";
+        const schema = "string gameMode, uint64 completionDate, bytes32 gameVersion";
         const resolverAddress = schemaRegistryContractAddress;
         const revocable = true;
 
@@ -150,6 +157,8 @@ export const RegisterSchema = () => {
 
         // Optional: Wait for transaction to be validated
         await transaction.wait();
+
+        console.log(transaction.tx)
 
     }
 
@@ -204,7 +213,12 @@ export const RegisterSchema = () => {
 
     return (
         <>
-
+            <button onClick={() => {
+                AttestOnChain()
+            }} className={`p-4 border-none rounded transition-colors text-xl
+        bg-[rgba(255,255,255,60%)] hover:bg-[#FFFFFF] hover:cursor-pointer `}>
+                Create Schemma
+            </button>
         </>
     )
 } 
