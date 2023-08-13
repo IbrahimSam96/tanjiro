@@ -288,7 +288,7 @@ export const Experience2 = () => {
         isError: isPrepareError,
     } = usePrepareContractWrite({
         abi: erc721DropABI,
-        address: erc721AddressSuperHack,
+        address: erc721AddressKatakana,
         functionName: "mintWithRewards",
         args: [recipient, quantity, comment, mintReferral],
         value: mintFee * quantity,
@@ -302,17 +302,15 @@ export const Experience2 = () => {
     } = useWaitForTransaction({ hash: data?.hash });
 
     console.log(receipt)
-    // useEffect(() => {
-    // // Play SoundTrack After Mint
-    //     if (isSuccess) {
-    //         const audio = new Audio(`./sounds/.mp3`);
-    //         if (callback) {
-    //             audio.addEventListener("ended", callback);
-    //         }
-    //         audio.play();
+    useEffect(() => {
+    // Play SoundTrack After Mint
+        if (isSuccess) {
+            const audio = new Audio(`./sounds/ThemeSong.mp3`);
+     
+            audio.play();
 
-    //     }
-    // }, [receipt])
+        }
+    }, [receipt])
 
 
     return (
