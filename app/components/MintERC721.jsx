@@ -26,7 +26,7 @@ export const MintERC721 = () => {
             if (connection.chain.name == "Optimism Goerli") {
                 setHariganaERC721Address('0x82d509f7c3e2cc64bb6bb4979a4492397b3d4707')
                 setKatakanaERC721Address('0x6c8ad6f32515eaa1275671f654a1cef7e2fc1113')
-                setSuperHackERC21Address('setSuperHackERC21Address')
+                setSuperHackERC21Address('0x2c5ba50d47769c2f541ba34f5756d16cf553c0a1')
             }
 
             if (connection.chain.name == 'Sepolia') {

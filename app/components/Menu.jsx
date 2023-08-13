@@ -136,7 +136,7 @@ const Menu = () => {
             const schemaEncoder = new SchemaEncoder("string gameMode, uint64 completionDate, bytes32 gameVersion");
             const encodedData = schemaEncoder.encodeData([
                 { name: "gameMode", value: mode, type: "string" },
-                { name: "completionDate", value: elapsed, type: "uint64" },
+                { name: "completionDate", value: parseInt(elapsed), type: "uint64" },
                 { name: "gameVersion", value: '1', type: "bytes32" },
             ]);
 
@@ -200,9 +200,7 @@ const Menu = () => {
 
 
                 <button disabled={gameState !== gameStates.MENU}
-                    onClick={() => {
-
-                    }}
+                    onClick={goToShow}
                     className={`MenubuttonMint flex`}
                 >
                     <Image className={`my-auto mr-2`} alt={'Zora Mint'} src={'/zoraOrb.svg'} width={30} height={30} />

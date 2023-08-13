@@ -102,3 +102,20 @@ a {
   cursor: pointer;
   color: #000000b3;
 }
+
+.MenuMint{
+  background: rgb(215 186 223 / 60%);
+  padding: 7px 12px;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.4s;
+  font-size: 1rem;
+  font-weight: 800;
+  color: white;
+}
+
+.MenuMint:hover {
+  background: #fffffff5;
+  cursor: pointer;
+  color: #000000b3;
+}
