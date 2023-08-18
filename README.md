@@ -7,7 +7,7 @@ Named after Demon Slayer Main Character Tanjiro Kamado, A interactive experience
 
 
 ## Features
-- 5 rounds 0f correct Kana's to guess. 
+- 5 rounds of correct Kana's to guess. 
 -  3D NFT game rewards.
 ## Tech Stack
 
