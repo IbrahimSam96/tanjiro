@@ -1,11 +1,12 @@
 import { CapsuleCollider, RigidBody, vec3 } from "@react-three/rapier"
 import Character from "./Character"
 import { useFrame } from "@react-three/fiber";
-import { useKeyboardControls } from "@react-three/drei";
+import { Environment, useKeyboardControls } from "@react-three/drei";
 import * as THREE from "three";
 import { Controls } from "../pageComponent";
 import React, { memo, useEffect, useRef } from "react";
 import { gameStates, playAudio, useGameStore } from "../store";
+import { Hisoka } from "./Hisoka";
 
 const JUMP_FORCE = 0.5;
 const MOVEMENT_SPEED = 0.1;
@@ -153,7 +154,8 @@ const CharacterController = () => {
                 }} colliders={false} scale={[0.5, 0.5, 0.5]}>
                 <CapsuleCollider args={[0.8, 0.4]} position={[0, 1.2, 0]} />
                 <group ref={character}>
-                    <Character />
+                    {/* <Character /> */}
+                    <Hisoka/>
                 </group>
             </RigidBody>
         </group>
